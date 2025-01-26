@@ -9,6 +9,7 @@ import axios from 'axios';
 const endpointMapping = {
     'Notion': 'notion',
     'Airtable': 'airtable',
+    'Hubspot':'hubspot'
 };
 
 export const DataForm = ({ integrationType, credentials }) => {
@@ -19,8 +20,11 @@ export const DataForm = ({ integrationType, credentials }) => {
         try {
             const formData = new FormData();
             formData.append('credentials', JSON.stringify(credentials));
+            console.log('FormData:', formData.get('credentials'));
             const response = await axios.post(`http://localhost:8000/integrations/${endpoint}/load`, formData);
             const data = response.data;
+            console.log(data);
+            
             setLoadedData(data);
         } catch (e) {
             alert(e?.response?.data?.detail);
